@@ -11,11 +11,15 @@ LPDIRECT3DTEXTURE9	SceneManager::m_sceneTexture[2];
 
 void SceneManager::Initialize() {
 	LPDIRECT3DDEVICE9 d3dDevice = GetDevice();
+	//各シーンのインスタンス作成
 	m_scene[0] = new SceneTitle;
 	m_scene[1] = new SceneGame;
+	//画像取得
 	D3DXCreateTextureFromFile(d3dDevice, "BackGround.bmp", &m_sceneTexture[0]);
 	D3DXCreateTextureFromFile(d3dDevice, "test.bmp", &m_sceneTexture[1]);
+	//初期シーン設定
 	m_sceneState = SCENE_TITLE;
+	//初期シーン初期化
 	m_scene[m_sceneState]->Initialize(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 0.0f, 1.0f, 1.0f, m_sceneTexture[SCENE_TITLE]);
 }
 

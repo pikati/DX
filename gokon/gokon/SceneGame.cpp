@@ -2,6 +2,10 @@
 #include "Input.h"
 #include "SceneManager.h"
 
+SceneGame::~SceneGame() {
+	SAFE_RELEASE(m_texture);
+}
+
 void SceneGame::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, LPDIRECT3DTEXTURE9 texture) {
 	m_x = x;
 	m_y = y;
@@ -21,7 +25,6 @@ void SceneGame::Update() {
 void SceneGame::Draw() {
 	VERTEX vertex[4];
 	LPDIRECT3DDEVICE9 d3dDevice = GetDevice();
-	HRESULT hr;
 	IDirect3DVertexBuffer9* pVertex;
 	/*2D—p‚ÌÝ’è*/
 	vertex[0].rhw = vertex[1].rhw = vertex[2].rhw = vertex[3].rhw = 1.0f;
@@ -53,15 +56,14 @@ void SceneGame::Draw() {
 	vertex[2].deffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
 	vertex[3].deffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
 
-	hr = d3dDevice->CreateVertexBuffer(sizeof(VERTEX) * 4, D3DUSAGE_WRITEONLY,
+	d3dDevice->CreateVertexBuffer(sizeof(VERTEX) * 4, D3DUSAGE_WRITEONLY,
 		FVF_VERTEX,
 		D3DPOOL_MANAGED,
 		&pVertex,
 		NULL);
 
 	void *pData;
-	hr = pVertex->Lock(0, sizeof(VERTEX) * 4, (void**)&pData, 0);
-	if (hr == D3D_OK) {
+	if (D3D_OK == pVertex->Lock(0, sizeof(VERTEX) * 4, (void**)&pData, 0)) {
 		memcpy(pData, vertex, sizeof(VERTEX) * 4);
 		pVertex->Unlock();
 	}
@@ -72,12 +74,20 @@ void SceneGame::Draw() {
 		d3dDevice->SetFVF(FVF_VERTEX);
 		d3dDevice->SetTexture(0, m_texture);
 		d3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-		//d3dDevice->SetTexture(0, NULL);
+		d3dDevice->SetTexture(0, NULL);
 		d3dDevice->EndScene();
 	}
+	SAFE_RELEASE(d3dDevice);
 }
 
 void SceneGame::Finalize() {
-	//SAFE_RELEASE(m_texture);
 	m_texture = NULL;
+	m_x = 0;
+	m_y = 0;
+	m_w = 0;
+	m_h = 0;
+	m_u = 0;
+	m_v = 0;
+	m_tw = 0;
+	m_th = 0;
 }

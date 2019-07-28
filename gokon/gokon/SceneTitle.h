@@ -6,6 +6,8 @@
 class SceneTitle : public BaseScene, public Object
 {
 public:
+	~SceneTitle();
+	//左上のx座標、左上のy座標、横幅、縦幅、テクスチャ（背景）の左上x座標、テクスチャの左上y座標、テクスチャの横幅、テクスチャの縦幅、テクスチャ
 	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, LPDIRECT3DTEXTURE9 texture);
 	void Update();
 	void Draw();
