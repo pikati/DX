@@ -4,6 +4,9 @@
 #include "SceneManager.h"
 
 SceneTitle::~SceneTitle() {
+	SAFE_RELEASE(m_pIB);
+	SAFE_RELEASE(m_pVB);	
+	SAFE_RELEASE(m_d3dDevice);
 	SAFE_RELEASE(m_texture);
 }
 
@@ -17,6 +20,7 @@ void SceneTitle::Initialize(float x, float y, float w, float h, float u, float v
 	m_tw = tw;
 	m_th = th;
 	m_texture = texture;
+	m_d3dDevice = GetDevice();
 }
 
 void SceneTitle::Update() {
@@ -25,8 +29,6 @@ void SceneTitle::Update() {
 
 void SceneTitle::Draw() {
 	VERTEX vertex[4];
-	LPDIRECT3DDEVICE9 d3dDevice = GetDevice();
-	IDirect3DVertexBuffer9* pVertex;
 	/*2D用の設定*/
 	vertex[0].rhw = vertex[1].rhw = vertex[2].rhw = vertex[3].rhw = 1.0f;
 	vertex[0].z = vertex[1].z = vertex[2].z = vertex[3].z = 0.0f;
@@ -58,31 +60,45 @@ void SceneTitle::Draw() {
 	vertex[3].deffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
 
 	//空の頂点バッファ作成
-	d3dDevice->CreateVertexBuffer(sizeof(VERTEX) * 4, D3DUSAGE_WRITEONLY,
+	m_d3dDevice->CreateVertexBuffer(sizeof(VERTEX) * 4, D3DUSAGE_WRITEONLY,
 		FVF_VERTEX,
 		D3DPOOL_MANAGED,
-		&pVertex,
+		&m_pVB,
 		NULL);
 
 	void *pData;
-	if (D3D_OK == pVertex->Lock(0, sizeof(VERTEX) * 4, (void**)&pData, 0)) {
+	if (D3D_OK == m_pVB->Lock(0, sizeof(VERTEX) * 4, (void**)&pData, 0)) {
 		memcpy(pData, vertex, sizeof(VERTEX) * 4);
-		pVertex->Unlock();
+		m_pVB->Unlock();
 	}
 
-	if (SUCCEEDED(d3dDevice->BeginScene()))
-	{
-		d3dDevice->SetStreamSource(0, pVertex, 0, sizeof(VERTEX));
-		d3dDevice->SetFVF(FVF_VERTEX);
-		d3dDevice->SetTexture(0, m_texture);
-		d3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-		d3dDevice->SetTexture(0, NULL);
-		d3dDevice->EndScene();
+	m_d3dDevice->CreateIndexBuffer(sizeof(VERTEX) * 4, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &m_pIB, NULL);
+
+	WORD* pI;
+	if (D3D_OK == m_pIB->Lock(0, 0, (void**)&pI, 0)) {
+		pI[0] = 0;
+		pI[1] = 1;
+		pI[2] = 2;
+		pI[3] = 3;
 	}
-	SAFE_RELEASE(d3dDevice);
+
+	if (SUCCEEDED(m_d3dDevice->BeginScene()))
+	{
+		m_d3dDevice->SetStreamSource(0, m_pVB, 0, sizeof(VERTEX));
+		m_d3dDevice->SetIndices(m_pIB);
+		m_d3dDevice->SetFVF(FVF_VERTEX);
+		m_d3dDevice->SetTexture(0, m_texture);
+		m_d3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, 4, 0, 2);
+		m_d3dDevice->SetTexture(0, NULL);
+		m_d3dDevice->EndScene();
+	}
+	
 }
 
 void SceneTitle::Finalize() {
+	m_pIB = NULL;
+	m_pVB = NULL;
+	m_d3dDevice = NULL;
 	m_texture = NULL;
 	m_x = 0;
 	m_y = 0;

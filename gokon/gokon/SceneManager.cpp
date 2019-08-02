@@ -32,9 +32,7 @@ void SceneManager::Update() {
 
 void SceneManager::Draw() {
 	LPDIRECT3DDEVICE9 d3dDevice = GetDevice();
-	//ロック
 	m_scene[m_sceneState]->Draw();
-	//アンロック
 	d3dDevice->Present(NULL, NULL, NULL, NULL);
 }
 
