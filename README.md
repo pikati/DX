@@ -1,2 +1,2 @@
 # DX
-DirectX tasks
+directXを使用したゲームを置く場所
