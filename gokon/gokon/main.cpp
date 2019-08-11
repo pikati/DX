@@ -135,6 +135,10 @@ HRESULT Initialize(HWND hWnd, HINSTANCE hInst)
 		return E_FAIL;
 	}
 
+	g_d3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	g_d3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	g_d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
 	//dinput‰Šú‰»
 	if (Input::Initialize()) {
 		return E_FAIL;

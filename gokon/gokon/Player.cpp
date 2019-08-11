@@ -2,7 +2,7 @@
 #include "Input.h"
 #include "main.h"
 
-void Player::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, LPDIRECT3DTEXTURE9 texture) {
+void Player::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th) {
 	m_x = x;
 	m_y = y;
 	m_w = w;
@@ -11,7 +11,6 @@ void Player::Initialize(float x, float y, float w, float h, float u, float v, fl
 	m_v = v;
 	m_tw = tw;
 	m_th = th;
-	m_texture = texture;
 }
 
 void Player::Update() {
