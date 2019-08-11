@@ -20,6 +20,6 @@ public:
 	static void					Draw();
 	static void					Finalize();
 	static void					ChangeSceneState();
-	static LPDIRECT3DTEXTURE9	GetTexture(SCENE_STATE scene);
+	static LPDIRECT3DTEXTURE9	GetTexture(int scene);
 };
 

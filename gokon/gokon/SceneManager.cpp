@@ -62,6 +62,6 @@ void SceneManager::ChangeSceneState() {
 	}
 }
 
-LPDIRECT3DTEXTURE9 SceneManager::GetTexture(SCENE_STATE scene) {
+LPDIRECT3DTEXTURE9 SceneManager::GetTexture(int scene) {
 	return m_sceneTexture[scene];
 }
