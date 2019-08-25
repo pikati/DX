@@ -3,7 +3,7 @@
 
 VERTEX Polygons::vertex[4];
 
-void Polygons::Draw(float x, float y, float w, float h, float tx, float ty, float tw, float th, int tex_id) {
+void Polygons::Draw(float x, float y, float w, float h, float tx, float ty, float tw, float th, LPDIRECT3DTEXTURE9 texture) {
 	LPDIRECT3DDEVICE9 d3dDvice = GetDevice();
 	//頂点バッファ
 	IDirect3DVertexBuffer9* pVB;
@@ -68,7 +68,7 @@ void Polygons::Draw(float x, float y, float w, float h, float tx, float ty, floa
 		d3dDvice->SetStreamSource(0, pVB, 0, sizeof(VERTEX));
 		d3dDvice->SetIndices(pIB);
 		d3dDvice->SetFVF(FVF_VERTEX);
-		d3dDvice->SetTexture(0, SceneManager::GetTexture(tex_id));
+		d3dDvice->SetTexture(0, texture);
 		d3dDvice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, 4, 0, 2);
 		d3dDvice->SetTexture(0, NULL);
 		d3dDvice->EndScene();

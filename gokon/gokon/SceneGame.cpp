@@ -15,6 +15,7 @@ void SceneGame::Initialize(float x, float y, float w, float h, float u, float v,
 	m_v = v;
 	m_tw = tw;
 	m_th = th;
+	texture.SetTexture("test.bmp");
 }
 
 void SceneGame::Update() {
@@ -22,7 +23,7 @@ void SceneGame::Update() {
 }
 
 void SceneGame::Draw() {
-	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, (int)SCENE_GAME);
+	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture.GetTexture());
 }
 
 void SceneGame::Finalize() {

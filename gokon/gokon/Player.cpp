@@ -12,6 +12,7 @@ void Player::Initialize(float x, float y, float w, float h, float u, float v, fl
 	m_v = v;
 	m_tw = tw;
 	m_th = th;
+	texture.SetTexture("runa.png");
 }
 
 void Player::Update() {
@@ -25,7 +26,7 @@ void Player::Update() {
 }
 
 void Player::Draw() {
-	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, 1);
+	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture.GetTexture());
 }
 
 void Player::Finalize() {

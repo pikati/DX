@@ -16,6 +16,6 @@ class Polygons
 private:
 	static VERTEX vertex[4];
 public:
-	static void Draw(float x, float y, float w, float h, float tx, float ty, float tw, float th, int tex_id);
+	static void Draw(float x, float y, float w, float h, float tx, float ty, float tw, float th, LPDIRECT3DTEXTURE9 texture);
 };
 

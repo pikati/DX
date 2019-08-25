@@ -6,13 +6,19 @@
 #pragma comment(lib,"d3dx9.lib")
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
+
+/*directXデバイス解放マクロ*/
 #define SAFE_RELEASE(p) do { if(p){ (p)->Release(); (p) = NULL;} } while(0)
-//▼▼▼頂点フォーマット▼▼▼//　/*後で説明する*/
+/*頂点フォーマット*/
 #define FVF_VERTEX (D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1)
 
-/*グローバル変数宣言*/
-//▼▼▼面倒だからおまじないって事で詳しくはggr▼▼▼//
-extern LPDIRECT3D9          g_pD3D;
+
+/*シーンの状態管理変数*/
+enum SCENE_STATE {
+	SCENE_TITLE,
+	SCENE_GAME
+};
+
 
 /*プロトタイプ宣言*/
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
