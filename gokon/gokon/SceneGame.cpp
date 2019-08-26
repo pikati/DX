@@ -15,15 +15,17 @@ void SceneGame::Initialize(float x, float y, float w, float h, float u, float v,
 	m_v = v;
 	m_tw = tw;
 	m_th = th;
-	texture.SetTexture("test.bmp");
+	texture.SetTexture("1-background.png");
+	player.Initialize(100.0f, 800.0f, 256.0f, 256.0f, 0.0f, 0.0f, 0.125f, 0.125f);
 }
 
 void SceneGame::Update() {
-	
+	player.Update();
 }
 
 void SceneGame::Draw() {
 	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture.GetTexture());
+	player.Draw();
 }
 
 void SceneGame::Finalize() {

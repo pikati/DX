@@ -19,6 +19,10 @@ enum SCENE_STATE {
 	SCENE_GAME
 };
 
+struct FLOAT2 {
+	float x;
+	float y;
+};
 
 /*プロトタイプ宣言*/
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);

@@ -2,11 +2,13 @@
 #include "BaseScene.h"
 #include "Texture.h"
 #include "Object.h"
+#include "Player.h"
 #include "main.h"
 
 class SceneGame : public BaseScene, public Object
 {
 private:
+	Player	player;
 	Texture texture;
 public:
 	~SceneGame();

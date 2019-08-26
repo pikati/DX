@@ -22,7 +22,7 @@ void Polygons::Draw(float x, float y, float w, float h, float tx, float ty, floa
 	vertex[2].x = x;
 	vertex[2].y = y + h;
 	vertex[3].x = x + w;
-	vertex[3].y = x + h;
+	vertex[3].y = y + h;
 
 	/*テクスチャ座標設定*/
 	vertex[0].tu = tx;

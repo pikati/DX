@@ -17,7 +17,7 @@ void SceneManager::Initialize() {
 	//初期シーン設定
 	m_sceneState = SCENE_TITLE;
 	//初期シーン初期化
-	m_scene[m_sceneState]->Initialize(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+	m_scene[m_sceneState]->Initialize(0.0f, 0.0f, 1920.0f, 1080.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 }
 
 void SceneManager::Update() {
@@ -28,7 +28,7 @@ void SceneManager::Update() {
 }
 
 void SceneManager::Draw() {
-	m_d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+	m_d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	m_scene[m_sceneState]->Draw();
 	m_d3dDevice->Present(NULL, NULL, NULL, NULL);
 }
@@ -44,12 +44,12 @@ void SceneManager::ChangeSceneState() {
 	case SCENE_TITLE:
 		m_scene[m_sceneState]->Finalize();
 		m_sceneState = SCENE_GAME;
-		m_scene[m_sceneState]->Initialize(0.0f, 0.0f, 256.0f, 256.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+		m_scene[m_sceneState]->Initialize(0.0f, 0.0f, 1920.0f, 1080.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 		break;
 	case SCENE_GAME:
 		m_scene[m_sceneState]->Finalize();
 		m_sceneState = SCENE_TITLE;
-		m_scene[m_sceneState]->Initialize(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+		m_scene[m_sceneState]->Initialize(0.0f, 0.0f, 1920.0f, 1080.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 		break;
 	default:
 		break;
