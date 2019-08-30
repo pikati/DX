@@ -41,7 +41,7 @@ void Player::Update() {
 		anim.SetState(RUNA_DAMAGE);
 	}
 	anim.Update();
-	FLOAT2 uv = anim.GetTexPosition();
+	FLOAT2 uv = anim.GetTexturePosition();
 	m_u = uv.x;
 	m_v = uv.y;
 	/*“–‚½‚è”»’è‚Æ‚©‚¢‚ë‚¢‚ëˆ—*/

@@ -32,7 +32,7 @@ void Animation::Update() {
 	SetUV();
 }
 
-FLOAT2 Animation::GetTexPosition() {
+FLOAT2 Animation::GetTexturePosition() {
 	return m_uv;
 }
 

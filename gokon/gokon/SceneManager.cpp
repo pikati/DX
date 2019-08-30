@@ -34,6 +34,8 @@ void SceneManager::Draw() {
 }
 
 void SceneManager::Finalize() {
+	m_scene[1]->Finalize();
+	m_scene[0]->Finalize();
 	delete m_scene[1];
 	delete m_scene[0];
 }
