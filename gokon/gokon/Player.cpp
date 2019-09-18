@@ -14,7 +14,6 @@ void Player::Initialize(float x, float y, float w, float h, float u, float v, fl
 	m_v = v;
 	m_tw = tw;
 	m_th = th;
-	texture.SetTexture("runa.png");
 	anim.Initialize(RUNA);
 }
 

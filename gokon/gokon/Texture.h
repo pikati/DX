@@ -4,7 +4,8 @@
 class Texture
 {
 private:
-	LPDIRECT3DTEXTURE9 m_texture;
+	LPDIRECT3DTEXTURE9 m_texture[10];
+	static int m_textureNum;
 public:
 	/// <summary>
 	/// 画像を読み込む
@@ -16,7 +17,7 @@ public:
 	/// 画像を返す
 	/// </summary>
 	/// <returns>テクスチャオブジェクトのポインタ</returns>
-	LPDIRECT3DTEXTURE9 GetTexture();
-	~Texture();
+	LPDIRECT3DTEXTURE9 GetTexture(int i);
+	void Finalize();
 };
 

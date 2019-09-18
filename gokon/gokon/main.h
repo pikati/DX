@@ -19,6 +19,7 @@ enum SCENE_STATE {
 	SCENE_GAME
 };
 
+
 struct FLOAT2 {
 	float x;
 	float y;

@@ -16,7 +16,8 @@ void SceneGame::Initialize(float x, float y, float w, float h, float u, float v,
 	m_tw = tw;
 	m_th = th;
 	texture.SetTexture("1-background.png");
-	player.Initialize(100.0f, 800.0f, 256.0f, 256.0f, 0.0f, 0.0f, 0.125f, 0.125f);
+	texture.SetTexture("runa.png");
+	player.Initialize(100.0f, 700.0f, 128.0f, 128.0f, 0.0f, 0.0f, 0.125f, 0.125f);
 }
 
 void SceneGame::Update() {
