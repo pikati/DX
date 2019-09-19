@@ -24,7 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.hInstance = hInstance;
-	wc.lpszClassName = "HOGE";//重要
+	wc.lpszClassName = "PIKATAN";//重要
 	wc.lpfnWndProc = (WNDPROC)WndProc;//重要 関数ポインタ
 	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
@@ -40,11 +40,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	g_hWnd = CreateWindow(wc.lpszClassName,
 		"DirectX9　サンプルプログラム",
-		WS_CAPTION | WS_SYSMENU,
+		WS_VISIBLE | WS_POPUP,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		1920,
-		1080,
+		1280,
+		720,
 		NULL,
 		NULL,
 		hInstance,
@@ -107,13 +107,22 @@ HRESULT Initialize(HWND hWnd, HINSTANCE hInst)
 	//▼▼▼ぶっちゃけおまじない▼▼▼//
 	D3DPRESENT_PARAMETERS d3dpp;
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
-	d3dpp.Windowed = TRUE;						//TRUE:ウィンドウモード FALSE:フルスクリーンモード
 	//フロントバッファとバックバッファの切り替え方法を定義
 	//D3DSWAPEFFECT_DISCARDは自動でで判断してくれるけどαブレンドの効果が保証されないけどなんかこれでええんやって
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;	//画面のフォーマットを格納 1ピクセルの色の定義情報のこと 楽する設定
-	d3dpp.EnableAutoDepthStencil = TRUE;		//深度ステンシルバッファの有無を指定 zバッファとステンシルバッファ 3DならTRUE
-	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;	//ステンシルバッファのフォーマットを指定
+	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;	//画面のフォーマットを格納 1ピクセルの色の定義情報のこと 楽する設定
+	d3dpp.BackBufferWidth = 1920;
+	d3dpp.BackBufferHeight = 1080;
+	d3dpp.BackBufferCount = 1;
+	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
+	d3dpp.MultiSampleQuality = 0;
+	d3dpp.hDeviceWindow = g_hWnd;
+	d3dpp.Windowed = FALSE;
+	d3dpp.EnableAutoDepthStencil = FALSE;
+	d3dpp.AutoDepthStencilFormat = D3DFMT_A1R5G5B5;
+	d3dpp.Flags = 0;
+	d3dpp.FullScreen_RefreshRateInHz = 0;
+	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
 	//IDIRCT3D9コンポーネントの取得
 	g_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
@@ -138,6 +147,7 @@ HRESULT Initialize(HWND hWnd, HINSTANCE hInst)
 	g_d3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	g_d3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	g_d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
 
 	//dinput初期化
 	if (Input::Initialize()) {

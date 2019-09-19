@@ -4,7 +4,7 @@
 #include "Object.h"
 #include "main.h"
 
-class SceneTitle : public BaseScene, public Object
+class SceneTitle : public BaseScene
 {
 private:
 	Texture texture;

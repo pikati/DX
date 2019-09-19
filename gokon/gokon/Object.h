@@ -28,6 +28,6 @@ protected:
 public:
 	virtual void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th) = 0;
 	virtual void Update() = 0;
-	virtual void Draw() = 0;
+	virtual void Draw(LPDIRECT3DTEXTURE9 texture) = 0;
 	virtual void Finalize() = 0;
 };

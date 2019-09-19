@@ -23,7 +23,7 @@ void SceneTitle::Update() {
 }
 
 void SceneTitle::Draw() {
-	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture.GetTexture());
+	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture.GetTexture(0));
 }
 
 void SceneTitle::Finalize() {

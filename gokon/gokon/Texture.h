@@ -5,8 +5,9 @@ class Texture
 {
 private:
 	LPDIRECT3DTEXTURE9 m_texture[10];
-	static int m_textureNum;
+	int m_textureNum;
 public:
+	Texture();
 	/// <summary>
 	/// ‰æ‘œ‚ğ“Ç‚İ‚Ş
 	/// </summary>

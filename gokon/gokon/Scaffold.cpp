@@ -10,14 +10,13 @@ void Scaffold::Initialize(float x, float y, float w, float h, float u, float v, 
 	m_v = v;
 	m_tw = tw;
 	m_th = th;
-	texture.SetTexture("runa.png");
 }
 
 void Scaffold::Update() {
 }
 
-void Scaffold::Draw() {
-	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture.GetTexture());
+void Scaffold::Draw(LPDIRECT3DTEXTURE9 texture) {
+	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture);
 }
 
 void Scaffold::Finalize() {

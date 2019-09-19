@@ -1,6 +1,8 @@
 #include "Texture.h"
 
-int		Texture::m_textureNum;
+Texture::Texture() {
+	m_textureNum = 0;
+}
 
 void Texture::SetTexture(const char *fileName) {
 	D3DXCreateTextureFromFile(GetDevice(), fileName, &m_texture[m_textureNum++]);

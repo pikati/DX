@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "main.h"
 
-class SceneGame : public BaseScene, public Object
+class SceneGame : public BaseScene
 {
 private:
 	Player	player;

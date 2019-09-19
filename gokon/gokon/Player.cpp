@@ -46,8 +46,8 @@ void Player::Update() {
 	/*“–‚½‚è”»’è‚Æ‚©‚¢‚ë‚¢‚ëˆ—*/
 }
 
-void Player::Draw() {
-	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture.GetTexture());
+void Player::Draw(LPDIRECT3DTEXTURE9 texture) {
+	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture);
 }
 
 void Player::Finalize() {

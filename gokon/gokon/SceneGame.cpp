@@ -17,7 +17,7 @@ void SceneGame::Initialize(float x, float y, float w, float h, float u, float v,
 	m_th = th;
 	texture.SetTexture("1-background.png");
 	texture.SetTexture("runa.png");
-	player.Initialize(100.0f, 700.0f, 128.0f, 128.0f, 0.0f, 0.0f, 0.125f, 0.125f);
+	player.Initialize(100.0f, 300.0f, 128.0f, 128.0f, 0.0f, 0.0f, 0.125f, 0.125f);
 }
 
 void SceneGame::Update() {
@@ -25,8 +25,8 @@ void SceneGame::Update() {
 }
 
 void SceneGame::Draw() {
-	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture.GetTexture());
-	player.Draw();
+	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture.GetTexture(0));
+	player.Draw(texture.GetTexture(1));
 }
 
 void SceneGame::Finalize() {
