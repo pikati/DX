@@ -12,6 +12,16 @@ LPDIRECT3DDEVICE9	g_d3dDevice = NULL;
 HWND				g_hWnd = NULL;
 HINSTANCE			g_hInstance;
 LPDIRECT3D9			g_pD3D = NULL;
+
+HMENU  g_hMenu = NULL;
+D3DPRESENT_PARAMETERS g_D3DPPWindow;
+D3DPRESENT_PARAMETERS g_D3DPPFull;
+D3DPRESENT_PARAMETERS g_D3DPP;    // D3DDeviceの設定(現在)
+
+bool g_bWindow = true;
+RECT  g_rectWindow;
+
+void ChangeDisplayMode(void);
 //■■■■■■■■■■■■■■■■//
 //■■■【エントリポイント】■■■//
 //■■■■■■■■■■■■■■■■//
@@ -94,7 +104,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-
+	case WM_SYSKEYDOWN:     // Alt + 特殊キーの処理に使う
+		switch (wParam)
+		{
+		case VK_RETURN:     // Alt + Enterを押すと切り替え
+			ChangeDisplayMode();
+			break;
+		default:
+			break;
+		}
+		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
@@ -105,24 +124,51 @@ HRESULT Initialize(HWND hWnd, HINSTANCE hInst)
 {
 	//▼▼▼どんなDirectX9を作りたいの？▼▼▼//
 	//▼▼▼ぶっちゃけおまじない▼▼▼//
-	D3DPRESENT_PARAMETERS d3dpp;
-	ZeroMemory(&d3dpp, sizeof(d3dpp));
+	
+	ZeroMemory(&g_D3DPPFull, sizeof(g_D3DPPFull));
 	//フロントバッファとバックバッファの切り替え方法を定義
 	//D3DSWAPEFFECT_DISCARDは自動でで判断してくれるけどαブレンドの効果が保証されないけどなんかこれでええんやって
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;	//画面のフォーマットを格納 1ピクセルの色の定義情報のこと 楽する設定
-	d3dpp.BackBufferWidth = 1920;
-	d3dpp.BackBufferHeight = 1080;
-	d3dpp.BackBufferCount = 1;
-	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
-	d3dpp.MultiSampleQuality = 0;
-	d3dpp.hDeviceWindow = g_hWnd;
-	d3dpp.Windowed = FALSE;
-	d3dpp.EnableAutoDepthStencil = FALSE;
-	d3dpp.AutoDepthStencilFormat = D3DFMT_A1R5G5B5;
-	d3dpp.Flags = 0;
-	d3dpp.FullScreen_RefreshRateInHz = 0;
-	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+	g_D3DPPFull.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	g_D3DPPFull.BackBufferFormat = D3DFMT_X8R8G8B8;	//画面のフォーマットを格納 1ピクセルの色の定義情報のこと 楽する設定
+	g_D3DPPFull.BackBufferWidth = 1920;
+	g_D3DPPFull.BackBufferHeight = 1080;
+	g_D3DPPFull.BackBufferCount = 1;
+	g_D3DPPFull.MultiSampleType = D3DMULTISAMPLE_NONE;
+	g_D3DPPFull.MultiSampleQuality = 0;
+	g_D3DPPFull.hDeviceWindow = g_hWnd;
+	g_D3DPPFull.Windowed = FALSE;
+	g_D3DPPFull.EnableAutoDepthStencil = FALSE;
+	g_D3DPPFull.AutoDepthStencilFormat = D3DFMT_A1R5G5B5;
+	g_D3DPPFull.Flags = 0;
+	g_D3DPPFull.FullScreen_RefreshRateInHz = 0;
+	g_D3DPPFull.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+
+	ZeroMemory(&g_D3DPPWindow, sizeof(g_D3DPPWindow));
+
+	g_D3DPPWindow.BackBufferWidth = 0;
+	g_D3DPPWindow.BackBufferHeight = 0;
+	g_D3DPPWindow.BackBufferFormat = D3DFMT_UNKNOWN;
+	g_D3DPPWindow.BackBufferCount = 1;
+	g_D3DPPWindow.MultiSampleType = D3DMULTISAMPLE_NONE;
+	g_D3DPPWindow.MultiSampleQuality = 0;
+	g_D3DPPWindow.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	g_D3DPPWindow.hDeviceWindow = g_hWnd;
+	g_D3DPPWindow.Windowed = TRUE;
+	g_D3DPPWindow.EnableAutoDepthStencil = FALSE;
+	g_D3DPPWindow.AutoDepthStencilFormat = D3DFMT_A1R5G5B5;
+	g_D3DPPWindow.Flags = 0;
+	g_D3DPPWindow.FullScreen_RefreshRateInHz = 0;
+	g_D3DPPWindow.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+
+	g_rectWindow.top = 0;
+	g_rectWindow.left = 0;
+	g_rectWindow.right =1920;
+	g_rectWindow.bottom = 1080;
+	AdjustWindowRect(&g_rectWindow, WS_OVERLAPPEDWINDOW, FALSE);
+	g_rectWindow.right = g_rectWindow.right - g_rectWindow.left;
+	g_rectWindow.bottom = g_rectWindow.bottom - g_rectWindow.top;
+	g_rectWindow.top = 0;
+	g_rectWindow.left = 0;
 
 	//IDIRCT3D9コンポーネントの取得
 	g_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
@@ -137,7 +183,7 @@ HRESULT Initialize(HWND hWnd, HINSTANCE hInst)
 		D3DDEVTYPE_HAL,		//D3DDEVTYPE列挙型のメンバを指定 HAL:ハードウェアを最大に生かしたパフォーマンス REF:ソフトウェアで描画 基本HALでいいがハードウェアがサポートしていな機能がある場合に注意
 		hWnd,				//ウィンドウハンドル	
 		D3DCREATE_HARDWARE_VERTEXPROCESSING,//デバイスの作成を制御するオプションフラグ どこで頂点処理させるかを選ぶ
-		&d3dpp,				//D3DPRESENT_PARAMETERS構造体へのポインタを指定
+		&g_D3DPPFull,				//D3DPRESENT_PARAMETERS構造体へのポインタを指定
 		&g_d3dDevice);		//IDirect3DDevice9コンポーネントへのポインタを指定
 	if (FAILED(hr))
 	{
@@ -199,3 +245,55 @@ D3DFVF_DIFFUSEは頂点に色情報を持たせる事が出来る。
 
 等々、様々なフォーマットがあるので自分で調べてみよう
 #endif
+
+void ChangeDisplayMode(void)
+{
+	g_bWindow = !g_bWindow;
+
+	if (g_bWindow)
+	{
+		g_D3DPP = g_D3DPPWindow;
+	}
+	else
+	{
+		g_D3DPP = g_D3DPPFull;
+		GetWindowRect(g_hWnd, &g_rectWindow);
+	}
+
+	HRESULT hr = g_d3dDevice->Reset(&g_D3DPP);
+	if (FAILED(hr))
+	{
+		if (hr != D3DERR_DEVICELOST)
+			DestroyWindow(g_hWnd);
+			
+		return;
+	}
+
+
+	if (g_bWindow)
+	{
+		SetWindowLong(g_hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
+		if (g_hMenu != NULL)
+		{
+			SetMenu(g_hWnd, g_hMenu);
+			g_hMenu = NULL;
+		}
+		SetWindowPos(g_hWnd, HWND_NOTOPMOST,
+			g_rectWindow.left, g_rectWindow.top,
+			g_rectWindow.right - g_rectWindow.left,
+			g_rectWindow.bottom - g_rectWindow.top,
+			SWP_SHOWWINDOW);
+	}
+	else
+	{
+		SetWindowLong(g_hWnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+		if (g_hMenu == NULL)
+		{
+			g_hMenu = GetMenu(g_hWnd);
+			SetMenu(g_hWnd, NULL);
+		}
+	}
+	g_d3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	g_d3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	g_d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+}

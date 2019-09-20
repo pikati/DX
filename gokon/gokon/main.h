@@ -19,6 +19,14 @@ enum SCENE_STATE {
 	SCENE_GAME
 };
 
+enum ATTRBUTE {
+	OBJECT,
+	PLAYER,
+	ENEMY,
+	P_ATK,
+	E_ATK,
+	ITEM
+};
 
 struct FLOAT2 {
 	float x;
