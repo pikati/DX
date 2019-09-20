@@ -78,6 +78,6 @@ public:
 	/// 現在のアニメーションに必要なUV座標を返す
 	/// </summary>
 	/// <returns>UV座標</returns>
-	FLOAT2 GetTexturePosition();
+	FLOAT2 SetTexturePosition();
 };
 

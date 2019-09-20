@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Stdio.h>
-
 #ifdef _DEBUG
 #   define MyOutputDebugString( str, ... ) \
       { \

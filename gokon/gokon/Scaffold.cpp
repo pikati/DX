@@ -23,3 +23,36 @@ void Scaffold::Finalize() {
 	SAFE_RELEASE(m_texture);
 	m_texture = NULL;
 }
+
+void Scaffold::Inversion() {
+	if (m_dir != m_oldDir) {
+		m_x += m_w;
+		m_w *= -1;
+	}
+}
+
+void Scaffold::TextureInverse() {
+	if (m_dir == LEFT) {
+		m_u += 0.125;
+		m_tw = -0.125f;
+	}
+	else {
+		m_tw = 0.125f;
+	}
+}
+
+float Scaffold::GetX() {
+	return m_x;
+}
+
+float Scaffold::GetY() {
+	return m_y;
+}
+
+float Scaffold::GetW() {
+	return m_w;
+}
+
+float Scaffold::GetH() {
+	return m_h;
+}

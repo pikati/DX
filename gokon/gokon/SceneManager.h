@@ -25,6 +25,6 @@ public:
 	static void					Finalize();
 	static void					ChangeSceneState();
 	static bool					PastOneFrame();
-	static LPDIRECT3DTEXTURE9	GetTexture(int scene);
+	static LPDIRECT3DTEXTURE9	SetTexture(int scene);
 };
 

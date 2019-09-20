@@ -3,8 +3,13 @@
 HRESULT					Input::m_ret = NULL;
 LPDIRECTINPUTDEVICE8	Input::m_lpKeyboard = NULL;
 LPDIRECTINPUT8			Input::m_lpDI = NULL;
-BYTE					Input::m_key[256];
-BYTE					Input::m_oldKey[256];
+BYTE					Input::m_key[KEY_MAX];
+BYTE					Input::m_keyTrigger[KEY_MAX];
+BYTE					Input::m_keyRelease[KEY_MAX];
+LPDIRECTINPUTDEVICE8	Input::m_pGamePad[GAMEPADMAX] = { NULL, NULL, NULL, NULL };
+DWORD					Input::m_padState[GAMEPADMAX];
+DWORD					Input::m_padTrigger[GAMEPADMAX];
+int						Input::m_padCount = 0;			// 検出したパッドの数
 
 HRESULT Input::Initialize() {
 	m_ret = DirectInput8Create(GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&m_lpDI, NULL);
@@ -29,9 +34,30 @@ HRESULT Input::Initialize() {
 		return E_FAIL;
 	}
 	memset(&m_key, 0, sizeof(m_key));
-	memset(&m_oldKey, 0, sizeof(m_oldKey));
+	memset(&m_keyTrigger, 0, sizeof(m_keyTrigger));
+	memset(&m_keyRelease, 0, sizeof(m_keyRelease));
 	m_lpKeyboard->Acquire();
+
 	return S_OK;
+}
+
+void Input::Update() {
+	BYTE aKeyState[KEY_MAX];
+
+	if (SUCCEEDED(m_lpKeyboard->GetDeviceState(sizeof(aKeyState), aKeyState)))
+	{
+		for (int nCnKey = 0; nCnKey < KEY_MAX; nCnKey++)
+		{
+			m_keyTrigger[nCnKey] = (m_key[nCnKey] ^ aKeyState[nCnKey]) & aKeyState[nCnKey];
+			m_keyRelease[nCnKey] = (m_key[nCnKey] ^ aKeyState[nCnKey]) & m_key[nCnKey];
+
+			m_key[nCnKey] = aKeyState[nCnKey];
+		}
+	}
+	else
+	{
+		m_lpKeyboard->Acquire();
+	}
 }
 
 void Input::Finalize() {
@@ -56,13 +82,12 @@ bool Input::GetKey(UINT keyCode) {
 	{
 		flag = true;
 	}
-	m_oldKey[keyCode] = m_key[keyCode];
+	m_keyTrigger[keyCode] = m_key[keyCode];
 
 	return flag;
 }
 
-bool Input::TriggerKey(UINT index)
-{
+bool Input::TriggerKey(UINT keyCode){
 	//チェックフラグ
 	bool flag = false;
 
@@ -74,11 +99,33 @@ bool Input::TriggerKey(UINT index)
 		m_lpKeyboard->Acquire();
 		m_lpKeyboard->GetDeviceState(sizeof(m_key), m_key);
 	}
-	if ((m_key[index] & 0x80) && !(m_oldKey[index] & 0x80))
+	if ((m_key[keyCode] & 0x80) && !(m_keyTrigger[keyCode] & 0x80))
 	{
 		flag = true;
 	}
-	m_oldKey[index] = m_key[index];
+	m_keyTrigger[keyCode] = m_key[keyCode];
+
+	return flag;
+
+}
+
+bool Input::ReleaseKey(UINT keyCode) {
+	//チェックフラグ
+	bool flag = false;
+
+	//キー情報を取得
+	ZeroMemory(m_key, sizeof(m_key));
+	m_ret = m_lpKeyboard->GetDeviceState(sizeof(m_key), m_key);
+	if (FAILED(m_ret)) {
+		// 失敗なら再開させてもう一度取得
+		m_lpKeyboard->Acquire();
+		m_lpKeyboard->GetDeviceState(sizeof(m_key), m_key);
+	}
+	if (!(m_key[keyCode] & 0x80) && (m_keyRelease[keyCode] & 0x80))
+	{
+		flag = true;
+	}
+	m_keyRelease[keyCode] = m_key[keyCode];
 
 	return flag;
 }

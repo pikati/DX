@@ -4,11 +4,11 @@ Texture::Texture() {
 	m_textureNum = 0;
 }
 
-void Texture::SetTexture(const char *fileName) {
+void Texture::LoadTexture(const char *fileName) {
 	D3DXCreateTextureFromFile(GetDevice(), fileName, &m_texture[m_textureNum++]);
 }
 
-LPDIRECT3DTEXTURE9 Texture::GetTexture(int i) {
+LPDIRECT3DTEXTURE9 Texture::SetTexture(int i) {
 	return m_texture[i];
 }
 

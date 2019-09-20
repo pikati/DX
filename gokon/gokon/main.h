@@ -28,6 +28,15 @@ enum ATTRBUTE {
 	ITEM
 };
 
+/*Œü‚«*/
+enum DIR {
+	UP,
+	DOWN,
+	RIGHT,
+	LEFT,
+	NON
+};
+
 struct FLOAT2 {
 	float x;
 	float y;

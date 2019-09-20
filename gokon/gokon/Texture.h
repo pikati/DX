@@ -12,13 +12,13 @@ public:
 	/// 画像を読み込む
 	/// </summary>
 	/// <param name="fileName">ファイル名</param>
-	void SetTexture(const char *fileName);
+	void LoadTexture(const char *fileName);
 
 	/// <summary>
 	/// 画像を返す
 	/// </summary>
 	/// <returns>テクスチャオブジェクトのポインタ</returns>
-	LPDIRECT3DTEXTURE9 GetTexture(int i);
+	LPDIRECT3DTEXTURE9 SetTexture(int i);
 	void Finalize();
 };
 

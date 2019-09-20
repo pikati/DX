@@ -1,13 +1,6 @@
 #pragma once
 #include "main.h"
 
-enum DIR {
-	UP,
-	DOWN,
-	RIGHT,
-	LEFT
-};
-
 class Object
 {
 protected:
@@ -29,18 +22,27 @@ protected:
 	float m_th;
 	//オブジェクトの属性
 	int		m_attribute;
+	//移動速度
+	float	m_speed;
 	//オブジェクトの向き
 	DIR		m_dir;
+	//1フレーム前の向き
+	DIR		m_oldDir;
 	//オブジェクトのテクスチャ
 	LPDIRECT3DTEXTURE9 m_texture;
 	//デバイス
 	LPDIRECT3DDEVICE9 m_d3dDevice;
 
 	virtual void Inversion() = 0;
+	virtual void TextureInverse() = 0;
 public:
 	virtual void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th) = 0;
 	virtual void Update() = 0;
 	virtual void Draw(LPDIRECT3DTEXTURE9 texture) = 0;
 	virtual void Finalize() = 0;
+	virtual float GetX() = 0;
+	virtual float GetY() = 0;
+	virtual float GetW() = 0;
+	virtual float GetH() = 0;
 	
 };

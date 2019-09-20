@@ -32,6 +32,7 @@ void SceneManager::Initialize() {
 }
 
 void SceneManager::Update() {
+	//Input::Update();
 	frame = PastOneFrame();
 	if (frame)
 	{
