@@ -15,7 +15,7 @@ void SceneTitle::Initialize(float x, float y, float w, float h, float u, float v
 	m_v = v;
 	m_tw = tw;
 	m_th = th;
-	texture.LoadTexture("1-floor.png");
+	texture.LoadTexture("Title.png");
 }
 
 void SceneTitle::Update() {
