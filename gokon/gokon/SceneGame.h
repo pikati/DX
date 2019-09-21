@@ -14,6 +14,7 @@ private:
 	Player	player;
 	Texture texture;
 	Scaffold m_scaffold[10];
+	bool		m_playerHit;
 public:
 	~SceneGame();
 	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th);

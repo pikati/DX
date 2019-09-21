@@ -29,11 +29,9 @@ void Player::Initialize(float x, float y, float w, float h, float u, float v, fl
 void Player::Update() {
 	if (Input::TriggerKey(DIK_RIGHT) || Input::TriggerKey(DIK_LEFT)) {
 		anim.SetState(RUNA_MOVE);
-		MyOutputDebugString("âüÇµÇΩÇÊ\n");
 	}
 	if (Input::ReleaseKey(DIK_RIGHT) || Input::ReleaseKey(DIK_LEFT)) {
 		anim.SetState(RUNA_IDOL);
-		MyOutputDebugString("òbÇµÇΩÇÊ\n");
 	}
 	if (Input::GetKey(DIK_RIGHT)) {
 		m_x += m_speed;
@@ -65,6 +63,8 @@ void Player::Update() {
 	TextureInverse();
 	/*ìñÇΩÇËîªíËÇ∆Ç©Ç¢ÇÎÇ¢ÇÎèàóù*/
 	m_oldDir = m_dir;
+	MyOutputDebugString("Grounded%s\n", m_isGround ? "true" : "false");
+
 }
 
 void Player::Draw(LPDIRECT3DTEXTURE9 texture) {

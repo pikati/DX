@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "Polygons.h"
 #include "Collision.h"
+#include "Utility.h"
 
 SceneGame::~SceneGame() {
 }
@@ -26,8 +27,8 @@ void SceneGame::Initialize(float x, float y, float w, float h, float u, float v,
 	/*for (int i = BLOCK_NUM - 5; i < BLOCK_NUM; i++) {
 		m_scaffold[i].Initialize(100.0f + i * 250.0f, 650.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 	}*/
-	m_scaffold[4].Initialize(100.0f + 1 * 250.0f, 650.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f);
-
+	m_scaffold[4].Initialize(100.0f + 1 * 250.0f, 550.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+	m_playerHit = true;
 }
 
 void SceneGame::Update() {
@@ -54,22 +55,36 @@ void SceneGame::Finalize() {
 
 void SceneGame::UpdatePlayer() {
 	player.Update();
+	m_playerHit = false;
 	for (int i = 0; i < BLOCK_NUM; i++) {
-		if (Collision::IsCollisionEnter(player.GetX(), player.GetY(), player.GetW(), player.GetH(), m_scaffold[i].GetX(), m_scaffold[i].GetY(), m_scaffold[i].GetW(), m_scaffold[i].GetH(), i)) {
+		if (Collision::IsCollisionEnter(player.GetX(), player.GetY(), player.GetW(), player.GetH(), m_scaffold[i].GetX(), m_scaffold[i].GetY(), m_scaffold[i].GetW(), m_scaffold[i].GetH())) {
 			DIR dir = Collision::CollisionDirection(player.GetX(), player.GetY(), player.GetW(), player.GetH(), m_scaffold[i].GetX(), m_scaffold[i].GetY(), m_scaffold[i].GetW(), m_scaffold[i].GetH());
-			if (dir == UP) {
-				player.SetY(m_scaffold[i].GetY() - player.GetH() + 1.0f);
+			switch (dir) {
+			case DOWN:
+				player.SetY(m_scaffold[i].GetY() + m_scaffold[i].GetH() + 1.0f);
+				m_playerHit = true;
+				break;
+			case RIGHT:
+				player.SetX(RIGHT);
+				m_playerHit = true;
+				break;
+			case LEFT:
+				player.SetX(LEFT);
+				m_playerHit = true;
+				break;
+			case UP:
+				player.SetY(m_scaffold[i].GetY() - player.GetH() - 1.0f);
 				player.Grounded(true);
-				return;
-			}
-			else {
-				player.SetX(dir);
-				player.Grounded(false);
+				m_playerHit = true;
+				break;
+			default:
+				break;
 			}
 		}
-		else {
-			player.Grounded(false);
-		}
+		
+	}
+	if(!m_playerHit) {
+		player.Grounded(false);
 	}
 }
 
