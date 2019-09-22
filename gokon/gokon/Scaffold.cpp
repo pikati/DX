@@ -1,7 +1,7 @@
 #include "Scaffold.h"
 #include "Polygons.h"
 
-void Scaffold::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th) {
+void Scaffold::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) {
 	m_x = x;
 	m_y = y;
 	m_w = w;
@@ -10,6 +10,8 @@ void Scaffold::Initialize(float x, float y, float w, float h, float u, float v, 
 	m_v = v;
 	m_tw = tw;
 	m_th = th;
+	m_attribute = attr;
+	m_dir = dir;
 }
 
 void Scaffold::Update() {
@@ -20,26 +22,8 @@ void Scaffold::Draw(LPDIRECT3DTEXTURE9 texture) {
 }
 
 void Scaffold::Finalize() {
-	SAFE_RELEASE(m_texture);
-	m_texture = NULL;
 }
 
-void Scaffold::Inversion() {
-	if (m_dir != m_oldDir) {
-		m_x += m_w;
-		m_w *= -1;
-	}
-}
-
-void Scaffold::TextureInverse() {
-	if (m_dir == LEFT) {
-		m_u += 0.125;
-		m_tw = -0.125f;
-	}
-	else {
-		m_tw = 0.125f;
-	}
-}
 
 float Scaffold::GetX() {
 	return m_x;

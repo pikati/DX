@@ -4,12 +4,8 @@
 class Scaffold :
 	public Object
 {
-private:
-	Texture		texture;
-	void Inversion() override;
-	void TextureInverse() override;
 public:
-	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th);
+	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir);
 	void Update();
 	void Draw(LPDIRECT3DTEXTURE9 texture);
 	void Finalize();

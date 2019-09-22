@@ -28,15 +28,9 @@ protected:
 	DIR		m_dir;
 	//1フレーム前の向き
 	DIR		m_oldDir;
-	//オブジェクトのテクスチャ
-	LPDIRECT3DTEXTURE9 m_texture;
-	//デバイス
-	LPDIRECT3DDEVICE9 m_d3dDevice;
 
-	virtual void Inversion() = 0;
-	virtual void TextureInverse() = 0;
 public:
-	virtual void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th) = 0;
+	virtual void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) = 0;
 	virtual void Update() = 0;
 	virtual void Draw(LPDIRECT3DTEXTURE9 texture) = 0;
 	virtual void Finalize() = 0;

@@ -20,14 +20,14 @@ void SceneGame::Initialize(float x, float y, float w, float h, float u, float v,
 	texture.LoadTexture("1-background.png");
 	texture.LoadTexture("runa.png");
 	texture.LoadTexture("1-floor.png");
-	player.Initialize(100.0f, 300.0f, 128.0f, 128.0f, 0.0f, 0.0f, 0.125f, 0.125f);
+	player.Initialize(100.0f, 300.0f, 128.0f, 128.0f, 0.0f, 0.0f, 0.125f, 0.125f, PLAYER, RIGHT);
 	for (int i = 0; i < BLOCK_NUM - 1; i++) {
-		m_scaffold[i].Initialize(100.0f + i * 250.0f, 800.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+		m_scaffold[i].Initialize(100.0f + i * 250.0f, 800.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
 	}
 	/*for (int i = BLOCK_NUM - 5; i < BLOCK_NUM; i++) {
-		m_scaffold[i].Initialize(100.0f + i * 250.0f, 650.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+		m_scaffold[i].Initialize(100.0f + i * 250.0f, 650.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
 	}*/
-	m_scaffold[4].Initialize(100.0f + 1 * 250.0f, 550.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+	m_scaffold[4].Initialize(100.0f + 1 * 250.0f, 550.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
 	m_playerHit = true;
 }
 

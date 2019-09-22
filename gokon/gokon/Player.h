@@ -1,24 +1,28 @@
 #pragma once
+#include <vector>
 #include "Animation.h"
 #include "Texture.h"
 #include "Object.h"
+#include "Bullet.h"
 
 #define JUMP_POWER -15.0f
 /*テクスチャ関係*/
 class Player : public Object
 {
 private:
-	Texture				texture;
+	Texture				m_texture;
 	Animation			anim;
+	std::vector<Bullet> m_bullet;
 	DIR					m_oldDir;
+	ATTRBUTE			m_attr;
 	float				m_oldY;
 	float				m_upPower;
 	bool				m_isGround;
-	void Gravity();
-	void Inversion() override;
-	void TextureInverse() override;
+	void Inversion();
+	void TextureInverse();
+	void Attack();
 public:
-	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th) override;
+	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) override;
 	void Update() override;
 	void Draw(LPDIRECT3DTEXTURE9 texture) override;
 	void Finalize() override;

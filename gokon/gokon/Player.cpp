@@ -7,7 +7,7 @@
 
 /*着地したときにキー入力しっぱだとアニメーションが変更されない*/
 
-void Player::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th) {
+void Player::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) {
 	m_x = x;
 	m_y = y;
 	m_w = w;
@@ -18,12 +18,14 @@ void Player::Initialize(float x, float y, float w, float h, float u, float v, fl
 	m_th = th;
 	anim.Initialize(RUNA);
 	m_attribute = PLAYER;
-	m_dir = RIGHT;
-	m_oldDir = RIGHT;
+	m_dir = dir;
+	m_oldDir = dir;
 	m_oldY = m_y;
 	m_isGround = false;
 	m_upPower = 0;
 	m_speed = 5.0f;
+	m_attr = attr;
+	m_texture.LoadTexture("Star.png");
 }
 
 void Player::Update() {
@@ -48,8 +50,8 @@ void Player::Update() {
 		anim.SetState(RUNA_JUMP);
 		Jump();
 	}
-	if (Input::GetKey(DIK_R)) {
-		anim.SetState(RUNA_ATTACK);
+	if (Input::TriggerKey(DIK_Z)) {
+		Attack();
 	}
 	if (Input::GetKey(DIK_T)) {
 		anim.SetState(RUNA_DAMAGE);
@@ -64,16 +66,21 @@ void Player::Update() {
 	/*当たり判定とかいろいろ処理*/
 	m_oldDir = m_dir;
 	MyOutputDebugString("Grounded%s\n", m_isGround ? "true" : "false");
+	for (int i = 0; i < m_bullet.size(); i++) {
+		m_bullet[i].Update();
+	}
 
 }
 
 void Player::Draw(LPDIRECT3DTEXTURE9 texture) {
 	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture);
+	for (int i = 0; i < m_bullet.size(); i++) {
+		m_bullet[i].Draw(m_texture.SetTexture(0));
+	}
 }
 
 void Player::Finalize() {
-	SAFE_RELEASE(m_texture);
-	m_texture = NULL;
+	m_texture.Finalize();
 }
 
 void Player::UpdateJump() {
@@ -143,4 +150,10 @@ void Player::SetX(DIR dir) {
 	else if (dir == RIGHT) {
 		m_x += m_speed;
 	}
+}
+
+void Player::Attack() {
+	anim.SetState(RUNA_ATTACK);
+	anim.SetLoop(false);
+	m_bullet.push_back(Bullet(m_x, m_y + 32.0f, 64.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, PLAYER, m_dir));
 }
