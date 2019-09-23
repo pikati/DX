@@ -11,6 +11,17 @@ void Animation::Initialize(int id) {
 	m_uv.y = 0;
 	m_loop = false;
 	InitializeAnimation();
+	switch (m_id)
+	{
+	case RUNA:
+		m_textureInterval = 8.0f;
+		break;
+	case CAT:
+		m_textureInterval = 4.0f;
+		break;
+	default:
+		break;
+	}
 }
 
 void Animation::SetState(ANIMATION newState) {
@@ -49,10 +60,13 @@ void Animation::InitializeAnimation() {
 		SetLoop(true);
 		SetSpeed(10);
 		break;
-	case ENEMY:
-		SetState(ENEMY_IDOL);
+	case CAT:
+		m_animation[CAT_MOVE] = 0;
+		m_animation[CAT_ATTACK] = 4;
+		m_animation[CAT_NON] = 7;
+		SetState(CAT_MOVE);
 		SetLoop(true);
-		SetSpeed(1);
+		SetSpeed(10);
 		break;
 	default:
 		break;
@@ -73,6 +87,6 @@ void Animation::UpdateFrame() {
 }
 
 void Animation::SetUV() {
-	m_uv.x = (float)((m_frame / m_speed + m_animation[m_state]) % 8) / 8.0f;
-	m_uv.y = (float)((m_frame / m_speed + m_animation[m_state]) / 8) / 8.0f;
+	m_uv.x = (float)((m_frame / m_speed + m_animation[m_state]) % (int)m_textureInterval) / m_textureInterval;
+	m_uv.y = (float)((m_frame / m_speed + m_animation[m_state]) / (int)m_textureInterval) / m_textureInterval;
 }

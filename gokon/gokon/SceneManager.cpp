@@ -3,7 +3,7 @@
 #include "SceneGame.h"
 #include "Input.h"
 #include "main.h"
-
+#include "Sound.h"
 
 //BaseScene			SceneManager::*m_scene[2];‚½‚¾‚ÌƒOƒ[ƒoƒ‹•Ï”
 BaseScene			*SceneManager::m_scene[2];
@@ -37,6 +37,7 @@ void SceneManager::Update() {
 	if (frame)
 	{
 		if (Input::TriggerKey(DIK_A)) {
+			Sound::SE(0)->Play(0, 0, 0);
 			SceneManager::ChangeSceneState();
 		}
 		m_scene[m_sceneState]->Update();
@@ -101,4 +102,8 @@ bool SceneManager::PastOneFrame() {
 
 	timeStart = timeEnd; // “ü‚ê‘Ö‚¦
 	return true;
+}
+
+BaseScene* SceneManager::SetSceneGame() {
+	return m_scene[1];
 }

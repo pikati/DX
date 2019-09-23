@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "SceneManager.h"
 #include "Polygons.h"
+#include "Sound.h"
 
 SceneTitle::~SceneTitle() {
 }
@@ -16,6 +17,8 @@ void SceneTitle::Initialize(float x, float y, float w, float h, float u, float v
 	m_tw = tw;
 	m_th = th;
 	texture.LoadTexture("Title.png");
+	Sound::BGM(0)->SetCurrentPosition(0);
+	Sound::BGM(0)->Play(0, 0, DSBPLAY_LOOPING);
 }
 
 void SceneTitle::Update() {
@@ -27,6 +30,7 @@ void SceneTitle::Draw() {
 }
 
 void SceneTitle::Finalize() {
+	Sound::BGM(0)->Stop();
 	m_x = 0;
 	m_y = 0;
 	m_w = 0;

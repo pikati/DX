@@ -12,6 +12,7 @@ void Scaffold::Initialize(float x, float y, float w, float h, float u, float v, 
 	m_th = th;
 	m_attribute = attr;
 	m_dir = dir;
+	m_firstX = m_x;
 }
 
 void Scaffold::Update() {
@@ -39,4 +40,24 @@ float Scaffold::GetW() {
 
 float Scaffold::GetH() {
 	return m_h;
+}
+
+void Scaffold::SetX(float x) {
+	m_x = x;
+}
+
+void Scaffold::Sety(float y) {
+	m_y = y;
+}
+
+void Scaffold::SetW(float w) {
+	m_w = w;
+}
+
+void Scaffold::SetH(float h) {
+	m_h = h;
+}
+
+float Scaffold::GetFirstX() {
+	return m_firstX;
 }

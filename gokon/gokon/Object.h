@@ -28,7 +28,8 @@ protected:
 	DIR		m_dir;
 	//1ƒtƒŒ[ƒ€‘O‚ÌŒü‚«
 	DIR		m_oldDir;
-
+	float				m_oldY;
+	bool	m_enable;
 public:
 	virtual void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) = 0;
 	virtual void Update() = 0;
@@ -38,5 +39,9 @@ public:
 	virtual float GetY() = 0;
 	virtual float GetW() = 0;
 	virtual float GetH() = 0;
+	virtual void SetX(float x) = 0;
+	virtual void Sety(float y) = 0;
+	virtual void SetW(float w) = 0;
+	virtual void SetH(float h) = 0;
 	
 };

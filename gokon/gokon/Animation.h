@@ -3,7 +3,8 @@
 
 /*キャラクター判別用*/
 #define RUNA 1
-#define ENEMY 2
+#define CAT  2
+#define BIRD 3
 
 /*アニメーション管理用変数*/
 enum ANIMATION {
@@ -13,8 +14,9 @@ enum ANIMATION {
 	RUNA_ATTACK,
 	RUNA_DAMAGE,
 	RUNA_NON,
-	ENEMY_IDOL = 0,
-	ENEMY_MOVE
+	CAT_MOVE = 0,
+	CAT_ATTACK,
+	CAT_NON
 };
 
 class Animation
@@ -24,6 +26,7 @@ private:
 	int			m_totalFrame;
 	int			m_id;
 	int			m_speed;
+	float		m_textureInterval;
 	bool		m_loop;
 	FLOAT2		m_uv;
 	ANIMATION	m_state;

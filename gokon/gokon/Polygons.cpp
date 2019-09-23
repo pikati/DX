@@ -1,5 +1,4 @@
 #include "Polygons.h"
-#include "SceneManager.h"
 
 VERTEX Polygons::vertex[4];
 
