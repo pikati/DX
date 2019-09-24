@@ -7,7 +7,7 @@ class Sound
 {
 private:
 	static const int				BGM_NUM = 3;
-	static const int				SE_NUM = 3;
+	static const int				SE_NUM = 5;
 	//サウンドデバイス
 	static LPDIRECTSOUND8			m_pDS;
 	//プライマリサウンドバッファ

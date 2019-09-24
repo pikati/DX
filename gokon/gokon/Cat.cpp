@@ -5,7 +5,6 @@
 #include "ObjectManager.h"
 #include "Bullet.h"
 #include "Sound.h"
-#include "Score.h"
 
 void Cat::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) {
 	m_x = x;
@@ -25,18 +24,18 @@ void Cat::Initialize(float x, float y, float w, float h, float u, float v, float
 	m_oldY = m_y;
 	m_speed = 3.0f;
 	m_enable = true;
-	m_hp = m_mhp = 20;
-	m_atk = 10;
 	m_frame = 0;
 	m_frameEffect = 0;
 	m_hpFrame.Initialize(100.0f, 22.0f, 100.0f, 50.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
 	m_hpFill.Initialize(100.0f, 22.0f, 100.0f, 50.0f, 0.0f, 0.0f, 1.0f, 0.25f, OBJECT, NON);
 	m_hpFrame.SetPosition(m_x, m_y - 50.0f);
-	m_hpFrame.SetLength(100.0f / m_mhp);
+	m_hpFrame.SetLength(10);
 	m_hpFill.SetPosition(m_x, m_y - 50.0f);
-	m_hpFill.SetLength(100.0f / m_mhp);
+	m_hpFill.SetLength(10);
 	m_firstX = m_x;
 	m_aria = false;
+	m_move = true;
+	InitStatus();
 	m_texture.LoadTexture("DarkStar.png");
 	m_texture.LoadTexture("Gauge.png");
 	m_texture.LoadTexture("GaugeFill.png");
@@ -144,7 +143,6 @@ float Cat::GetH() {
 	return m_h;
 }
 
-
 void Cat::SetX(float x) {
 	m_x = x;
 }
@@ -199,7 +197,6 @@ void Cat::Attack() {
 	
 }
 	
-
 void Cat::Gravity() {
 	float tmp = m_y;
 	m_y += (m_y - m_oldY) + m_upPower;
@@ -209,7 +206,6 @@ void Cat::Gravity() {
 
 void Cat::Destroy() {
 	m_enable = false;
-	Score::AddScore(100);
 	Finalize();
 }
 
@@ -227,6 +223,9 @@ void Cat::Damage(int damage) {
 }
 
 void Cat::Move() {
+	if (!m_move) {
+		return;
+	}
 	switch (m_dir)
 	{
 	case LEFT:
@@ -274,5 +273,41 @@ void Cat::CheckAria() {
 	}
 	else {
 		m_aria = false;
+	}
+}
+
+void Cat::SetMove(bool move) {
+	m_move = move;
+}
+
+int Cat::GetEXP() {
+	return m_exp;
+}
+
+void Cat::InitStatus() {
+	if (m_x < 7680) {
+		m_hp = m_mhp = 3;
+		m_atk = 10;
+		m_exp = 300;
+	}
+	else if (m_x < 12000) {
+		m_hp = m_mhp = 5;
+		m_atk = 10;
+		m_exp = 600;
+	}
+	else if (m_x < 15800) {
+		m_hp = m_mhp = 7;
+		m_atk = 15;
+		m_exp = 2000;
+	}
+	else if (m_x < 19200) {
+		m_hp = m_mhp = 10;
+		m_atk = 5;
+		m_exp = 2500;
+	}
+	else {
+		m_hp = m_mhp = 100;
+		m_atk = 2;
+		m_exp = 10000;
 	}
 }

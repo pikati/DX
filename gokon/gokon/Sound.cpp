@@ -21,6 +21,8 @@ void Sound::Initialize() {
 	CreateSecondaryBuffer(&m_pSecondarySE[0], "SE/Decision.wav");
 	CreateSecondaryBuffer(&m_pSecondarySE[1], "SE/StarAtk.wav");
 	CreateSecondaryBuffer(&m_pSecondarySE[2], "SE/Damage.wav");
+	CreateSecondaryBuffer(&m_pSecondarySE[3], "SE/Cancel.wav");
+	CreateSecondaryBuffer(&m_pSecondarySE[4], "SE/LVUP.wav");
 }
 
 void Sound::Finalize() {

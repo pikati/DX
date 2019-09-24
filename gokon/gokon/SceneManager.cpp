@@ -37,8 +37,10 @@ void SceneManager::Update() {
 	if (frame)
 	{
 		if (Input::TriggerKey(DIK_A)) {
-			Sound::SE(0)->Play(0, 0, 0);
-			SceneManager::ChangeSceneState();
+			if (m_sceneState == SCENE_TITLE) {
+				Sound::SE(0)->Play(0, 0, 0);
+				SceneManager::ChangeSceneState();
+			}
 		}
 		m_scene[m_sceneState]->Update();
 	}

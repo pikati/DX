@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "Object.h"
 #include "Bullet.h"
+#include "LevelUp.h"
 
 /*テクスチャ関係*/
 class Player : public Object
@@ -11,6 +12,7 @@ class Player : public Object
 private:
 	Texture				m_texture;
 	Animation			anim;
+	LevelUp				m_l;
 	std::vector<Bullet> m_bullet;
 	float				m_upPower;
 	bool				m_isGround;
@@ -22,10 +24,24 @@ private:
 	int					m_atk;
 	float				m_move;
 	int					m_exp;
+	float				m_healSpeed;
+	int					m_lvhp[MAX_LV];
+	int					m_lvmp[MAX_LV];
+	int					m_lvatk[MAX_LV];
+	float				m_lvheal[MAX_LV];
 	void TextureInverse();
 	void Attack();
 	void CheckHP();
 	void CheckBullet();
+	void HealMP();
+	void InitializeHP();
+	void InitializeMP();
+	void InitializeATK();
+	void InitializeHeal();
+	void SetHP();
+	void SetMP();
+	void SetATK();
+	void SetHeal();
 public:
 	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) override;
 	void Update() override;
@@ -53,5 +69,7 @@ public:
 	int GetMaxMP();
 	int GetMP();
 	void GetEXP(int exp);
+	int SetEXP();
+	void Heal(int heal);
 };
 

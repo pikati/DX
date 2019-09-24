@@ -24,8 +24,10 @@ private:
 	int					m_atk;
 	int					m_frame;
 	int					m_frameEffect;
+	int					m_exp;
 	float				m_firstX;
 	bool				m_aria;
+	bool				m_move;
 	void TextureInverse();
 	void Attack();
 	void Gravity();
@@ -33,6 +35,7 @@ private:
 	void CheckBullet();
 	void Move();
 	void CheckAria();
+	void InitStatus();
 public:
 	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) override;
 	void Update() override;
@@ -55,5 +58,7 @@ public:
 	int GetAtk();
 	bool GetActive();
 	bool CheckHP();
+	void SetMove(bool move);
+	int GetEXP();
 };
 

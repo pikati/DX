@@ -7,9 +7,11 @@
 #include "Scaffold.h"
 #include "GameUI.h"
 #include "Cat.h"
+#include "Score.h"
+#include "Time.h"
 
-#define BLOCK_NUM 21
-#define CAT_MAX 1
+#define BLOCK_NUM 89
+#define CAT_MAX 31
 
 class SceneGame : public BaseScene
 {
@@ -19,8 +21,15 @@ private:
 	Texture texture;
 	Scaffold m_scaffold[BLOCK_NUM];
 	GameUI	m_gameUI;
-	bool		m_playerHit;
+	Score   m_scor;
+	Score   m_exp;
+	Time	m_time;
+	bool	m_playerHit;
+	int		m_score;
+	bool	m_end;
 
+	void InitilizeScaffold();
+	void InitializeCat();
 	void UpdatePlayer();
 	void UpdateEnemy();
 	void UpdateScaffold();

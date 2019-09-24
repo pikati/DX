@@ -3,14 +3,17 @@
 class Score
 {
 private:
-	static Texture m_texture;
-	static int m_score;
+	Texture m_texture;
+	int m_score;
+	float m_y;
+	bool m_s;
 public:
-	static void Initialize();
-	static void Update();
-	static void Draw();
-	static void Finalize();
-	static void AddScore(int score);
-	static int  GetScore();
+	void Initialize(bool score, float m_y);
+	void Update();
+	void Draw();
+	void Finalize();
+	void AddScore(int score);
+	int  GetScore();
+	void SetScore(int value);
 };
 
