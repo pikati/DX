@@ -5,6 +5,7 @@
 #include "ObjectManager.h"
 #include "Bullet.h"
 #include "Sound.h"
+#include "Score.h"
 
 void Cat::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) {
 	m_x = x;
@@ -35,6 +36,7 @@ void Cat::Initialize(float x, float y, float w, float h, float u, float v, float
 	m_hpFill.SetPosition(m_x, m_y - 50.0f);
 	m_hpFill.SetLength(100.0f / m_mhp);
 	m_firstX = m_x;
+	m_aria = false;
 	m_texture.LoadTexture("DarkStar.png");
 	m_texture.LoadTexture("Gauge.png");
 	m_texture.LoadTexture("GaugeFill.png");
@@ -42,7 +44,11 @@ void Cat::Initialize(float x, float y, float w, float h, float u, float v, float
 }
 
 void Cat::Update() {
+	CheckAria();
 	if (!m_enable) {
+		return;
+	}
+	if (!m_aria) {
 		return;
 	}
 	anim.Update();
@@ -68,10 +74,14 @@ void Cat::Update() {
 	m_hpFill.SetValue(m_mhp, m_hp);
 	m_hpFill.SetPosition(m_x, m_y - 50.0f);
 	m_hpFill.Update();
+	CheckBullet();
 }
 
 void Cat::Draw(LPDIRECT3DTEXTURE9 texture) {
 	if (!m_enable) {
+		return;
+	}
+	if (!m_aria) {
 		return;
 	}
 	if (m_frameEffect != 0) {
@@ -87,7 +97,7 @@ void Cat::Draw(LPDIRECT3DTEXTURE9 texture) {
 			m_u = 0.0f;
 			m_v = 0.5f;
 		}
-		else if (m_frameEffect < 20) {
+		else if (m_frameEffect <= 20) {
 			m_u = 0.5f;
 			m_v = 0.5f;
 		}
@@ -105,6 +115,7 @@ void Cat::Draw(LPDIRECT3DTEXTURE9 texture) {
 
 void Cat::Finalize() {
 	m_texture.Finalize();
+	m_x = 10000.0f;
 }
 
 void Cat::TextureInverse() {
@@ -198,6 +209,7 @@ void Cat::Gravity() {
 
 void Cat::Destroy() {
 	m_enable = false;
+	Score::AddScore(100);
 	Finalize();
 }
 
@@ -246,4 +258,21 @@ bool Cat::GetActive() {
 
 float Cat::GetFirstX() {
 	return m_firstX;
+}
+
+void Cat::CheckBullet() {
+	for (unsigned int i = 0; i < m_bullet.size(); i++) {
+		if (m_bullet[i].GetX() < -100.0f || m_bullet[i].GetX() > 2000.0f) {
+			m_bullet.erase(m_bullet.begin() + i);
+		}
+	}
+}
+
+void Cat::CheckAria() {
+	if (m_x > -500.0f && m_x < 2400.0f) {
+		m_aria = true;
+	}
+	else {
+		m_aria = false;
+	}
 }

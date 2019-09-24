@@ -51,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	g_hWnd = CreateWindow(wc.lpszClassName,
 		"DirectX9　サンプルプログラム",
-		WS_VISIBLE /*| WS_POPUP*/,
+		WS_VISIBLE | WS_POPUP,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
 		1280,
@@ -137,7 +137,7 @@ HRESULT Initialize(HWND hWnd, HINSTANCE hInst)
 	g_D3DPPFull.MultiSampleType = D3DMULTISAMPLE_NONE;
 	g_D3DPPFull.MultiSampleQuality = 0;
 	g_D3DPPFull.hDeviceWindow = g_hWnd;
-	g_D3DPPFull.Windowed = TRUE;
+	g_D3DPPFull.Windowed = FALSE;
 	g_D3DPPFull.EnableAutoDepthStencil = FALSE;
 	g_D3DPPFull.AutoDepthStencilFormat = D3DFMT_A1R5G5B5;
 	g_D3DPPFull.Flags = 0;

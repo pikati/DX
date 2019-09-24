@@ -1,3 +1,4 @@
+/*åoå±ílèëÇ¢ÇΩÇÊ*/
 #define _CRT_SECURE_NO_WARNINGS
 #include "SceneGame.h"
 #include "Input.h"
@@ -10,11 +11,13 @@
 #include <vector>
 #include "Sound.h"
 #include "Camera.h"
+#include "Score.h"
 
 SceneGame::~SceneGame() {
 }
 
 void SceneGame::Initialize(float x, float y, float w, float h, float u, float v, float tw, float th) {
+	int i = 0;
 	m_x = x;
 	m_y = y;
 	m_w = w;
@@ -28,27 +31,39 @@ void SceneGame::Initialize(float x, float y, float w, float h, float u, float v,
 	texture.LoadTexture("Floor.png");
 	texture.LoadTexture("Cat.png");
 	m_cat[0].Initialize(600.0f, 300.0f, 128.0f, 128.0f, 0.0f, 0.0f, 0.25f, 0.25f, ENEMY, LEFT);
-	player.Initialize(100.0f, 300.0f, 128.0f, 128.0f, 0.0f, 0.0f, 0.125f, 0.125f, PLAYER, RIGHT);
+	player.Initialize(120.0f, 228.0f, 128.0f, 128.0f, 0.0f, 0.0f, 0.125f, 0.125f, PLAYER, RIGHT);
 	m_gameUI.Initialize();
-	for (int i = 0; i < BLOCK_NUM - 3; i++) {
-		m_scaffold[i].Initialize(100.0f + i * 250.0f, 800.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	for (; i < 4; i++) {
+		m_scaffold[i].Initialize(100.0f, 800.0f - (i + 1) * 64.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
 	}
-	/*for (int i = BLOCK_NUM - 5; i < BLOCK_NUM; i++) {
-		m_scaffold[i].Initialize(100.0f + i * 250.0f, 650.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
-	}*/
-	m_scaffold[4].Initialize(100.0f + 1 * 250.0f, 550.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
-	m_scaffold[5].Initialize(100.0f + -1 * 250.0f, 736.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
-	m_scaffold[6].Initialize(100.0f + 4 * 250.0f, 736.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	for (; i < 9; i++) {
+		m_scaffold[i].Initialize(100.0f + (i - 4) * 256.0f, 800.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	}
+	m_scaffold[9].Initialize(100.0f + 5 * 256.0f, 800.0f - 64.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[10].Initialize(100.0f + 6 * 256.0f, 800.0f - 64.0f * 2, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[11].Initialize(100.0f + 7 * 256.0f, 800.0f - 64.0f * 3, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[12].Initialize(100.0f + 8 * 256.0f, 800.0f - 64.0f * 3, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[13].Initialize(100.0f + 9 * 256.0f, 800.0f - 64.0f * 2, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[14].Initialize(100.0f + 10 * 256.0f, 800.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[15].Initialize(100.0f + 11 * 256.0f, 800.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[16].Initialize(100.0f + 12 * 256.0f, 800.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[17].Initialize(100.0f + 13 * 256.0f, 800.0f, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[18].Initialize(100.0f + 14 * 256.0f, 800.0f - 64.0f * 1, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[19].Initialize(100.0f + 15 * 256.0f, 800.0f - 64.0f * 1, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+	m_scaffold[20].Initialize(100.0f + 16 * 256.0f, 800.0f - 64.0f * 1, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
+
 	m_playerHit = true;
 	Sound::SE(0)->Stop();
 	Sound::BGM(1)->SetCurrentPosition(0);
 	Sound::BGM(1)->Play(0, 0, DSBPLAY_LOOPING);
 	Camera::Initialize();
+	Score::Initialize();
 }
 
 void SceneGame::Update() {
 	UpdatePlayer();
 	UpdateEnemy();
+	UpdateScaffold();
 	UpdateCollision();
 	m_gameUI.Update();
 	Camera::Update();
@@ -71,6 +86,7 @@ void SceneGame::Finalize() {
 	m_v = 0;
 	m_tw = 0;
 	m_th = 0;
+	Score::Finalize();
 	texture.Finalize();
 	player.Finalize();
 	m_cat[0].Finalize();
@@ -83,6 +99,12 @@ void SceneGame::UpdatePlayer() {
 
 void SceneGame::UpdateEnemy() {
 	m_cat[0].Update();
+}
+
+void SceneGame::UpdateScaffold() {
+	for (int i = 0; i < BLOCK_NUM; i++) {
+		m_scaffold[i].Update();
+	}
 }
 
 void SceneGame::UpdateCollision() {
@@ -171,6 +193,9 @@ void SceneGame::ColCandA() {
 			}
 			if (Collision::IsCollisionEnter(m_cat[j].GetX(), m_cat[j].GetY(), m_cat[j].GetW(), m_cat[j].GetH(), (*bullet)[i].GetX(), (*bullet)[i].GetY(), (*bullet)[i].GetW(), (*bullet)[i].GetH())) {
 				m_cat[0].Damage(player.GetAtk());
+				if (m_cat[0].CheckHP()) {
+					player.GetEXP(100);
+				}
 				(*bullet)[i].Finalize();
 				(*bullet).erase((*bullet).begin() + i);
 			}

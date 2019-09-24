@@ -6,6 +6,7 @@
 #include "Utility.h"
 #include "Sound.h"
 #include "Camera.h"
+#include "Score.h"
 
 /*着地したときにキー入力しっぱだとアニメーションが変更されない そんなの知るか*/
 
@@ -31,6 +32,7 @@ void Player::Initialize(float x, float y, float w, float h, float u, float v, fl
 	m_mmp = m_mp = 100;
 	m_atk = 10;
 	m_move = m_x;
+	m_exp = 0;
 	m_texture.LoadTexture("Star.png");
 }
 
@@ -87,7 +89,7 @@ void Player::Update() {
 		m_bullet[i].Update();
 	}
 	CheckHP();
-	
+	CheckBullet();
 }
 
 void Player::Draw(LPDIRECT3DTEXTURE9 texture) {
@@ -199,7 +201,7 @@ std::vector<Bullet>* Player::GetBullet() {
 }
 
 void Player::Damage(int damage) {
-	//m_hp += -damage;
+	m_hp += -damage;
 }
 
 int Player::GetAtk() {
@@ -230,4 +232,16 @@ int Player::GetMP() {
 
 float Player::GetFirstX() {
 	return m_x;
+}
+
+void Player::CheckBullet() {
+	for (unsigned int i = 0; i < m_bullet.size(); i++) {
+		if (m_bullet[i].GetX() < -100.0f || m_bullet[i].GetX() > 2000.0f) {
+			m_bullet.erase(m_bullet.begin() + i);
+		}
+	}
+}
+
+void Player::GetEXP(int exp) {
+	m_exp += exp;
 }

@@ -25,12 +25,14 @@ private:
 	int					m_frame;
 	int					m_frameEffect;
 	float				m_firstX;
+	bool				m_aria;
 	void TextureInverse();
 	void Attack();
 	void Gravity();
 	void Destroy();
-	bool CheckHP();
+	void CheckBullet();
 	void Move();
+	void CheckAria();
 public:
 	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) override;
 	void Update() override;
@@ -52,5 +54,6 @@ public:
 	std::vector<Bullet>* GetBullet();
 	int GetAtk();
 	bool GetActive();
+	bool CheckHP();
 };
 

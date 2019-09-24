@@ -13,12 +13,22 @@ void Scaffold::Initialize(float x, float y, float w, float h, float u, float v, 
 	m_attribute = attr;
 	m_dir = dir;
 	m_firstX = m_x;
+	m_aria = false;
 }
 
 void Scaffold::Update() {
+	if (m_x > -256.0f && m_x < 1920.0f) {
+		m_aria = true;
+	}
+	else{
+		m_aria = false;
+	}
 }
 
 void Scaffold::Draw(LPDIRECT3DTEXTURE9 texture) {
+	if (!m_aria) {
+		return;
+	}
 	Polygons::Draw(m_x, m_y, m_w, m_h, m_u, m_v, m_tw, m_th, texture);
 }
 

@@ -21,9 +21,11 @@ private:
 	int					m_mp;
 	int					m_atk;
 	float				m_move;
+	int					m_exp;
 	void TextureInverse();
 	void Attack();
 	void CheckHP();
+	void CheckBullet();
 public:
 	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir) override;
 	void Update() override;
@@ -50,6 +52,6 @@ public:
 	int GetHP();
 	int GetMaxMP();
 	int GetMP();
-	void Modosu();
+	void GetEXP(int exp);
 };
 

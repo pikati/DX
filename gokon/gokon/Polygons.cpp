@@ -62,16 +62,13 @@ void Polygons::Draw(float x, float y, float w, float h, float tx, float ty, floa
 		pI[3] = 3;
 	}
 
-	if (SUCCEEDED(d3dDvice->BeginScene()))
-	{
-		d3dDvice->SetStreamSource(0, pVB, 0, sizeof(VERTEX));
-		d3dDvice->SetIndices(pIB);
-		d3dDvice->SetFVF(FVF_VERTEX);
-		d3dDvice->SetTexture(0, texture);
-		d3dDvice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, 4, 0, 2);
-		d3dDvice->SetTexture(0, NULL);
-		d3dDvice->EndScene();
-	}
+	d3dDvice->SetStreamSource(0, pVB, 0, sizeof(VERTEX));
+	d3dDvice->SetIndices(pIB);
+	d3dDvice->SetFVF(FVF_VERTEX);
+	d3dDvice->SetTexture(0, texture);
+	d3dDvice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, 4, 0, 2);
+	d3dDvice->SetTexture(0, NULL);
+	
 	SAFE_RELEASE(pIB);
 	SAFE_RELEASE(pVB);
 }

@@ -8,7 +8,7 @@
 #include "GameUI.h"
 #include "Cat.h"
 
-#define BLOCK_NUM 7
+#define BLOCK_NUM 21
 #define CAT_MAX 1
 
 class SceneGame : public BaseScene
@@ -23,6 +23,7 @@ private:
 
 	void UpdatePlayer();
 	void UpdateEnemy();
+	void UpdateScaffold();
 	void UpdateCollision();
 	void DrawPlayer();
 	void DrawEnemy();

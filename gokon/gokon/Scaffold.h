@@ -6,6 +6,7 @@ class Scaffold :
 {
 private:
 	float m_firstX;
+	bool  m_aria;
 public:
 	void Initialize(float x, float y, float w, float h, float u, float v, float tw, float th, ATTRBUTE attr, DIR dir);
 	void Update();
