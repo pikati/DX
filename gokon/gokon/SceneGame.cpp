@@ -50,6 +50,7 @@ void SceneGame::Initialize(float x, float y, float w, float h, float u, float v,
 
 void SceneGame::Update() {
 	if (player.GetY() > 1200.0f && m_end == false) {
+		m_scaffold[BLOCK_NUM - 1].Initialize(100.0f + 256.0f, 800.0f - 64.0f * 3, 256.0f, 128.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
 		m_end = true;
 	}
 	if (m_end) {
@@ -114,7 +115,10 @@ void SceneGame::UpdateEnemy() {
 }
 
 void SceneGame::UpdateScaffold() {
-	for (int i = 0; i < BLOCK_NUM - 1; i++) {
+	for (int i = 0; i < BLOCK_NUM; i++) {
+		if (i == 88) {
+			MyOutputDebugString("x::%f y::%f\n", m_scaffold[i].GetX(), m_scaffold[i].GetY());
+		}
 		m_scaffold[i].Update();
 	}
 }
@@ -304,7 +308,6 @@ void SceneGame::InitilizeScaffold() {
 	m_scaffold[i++].Initialize(100.0f + 256.0f * x++, 800.0f - 64.0f * 0, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
 	m_scaffold[i++].Initialize(100.0f + 256.0f * x++, 800.0f - 64.0f * 0, 256.0f, 64.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
 	m_scaffold[i++].Initialize(100.0f + 256.0f * (x+2), 800.0f - 64.0f * 1, 256.0f, 256.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
-	m_scaffold[i++].Initialize(100.0f + 256.0f * x++, 800.0f - 64.0f * 3, 256.0f, 128.0f, 0.0f, 0.0f, 1.0f, 1.0f, OBJECT, NON);
 
 }
 

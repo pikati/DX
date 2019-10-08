@@ -14,9 +14,9 @@ void Time::Update() {
 		return;
 	}*/
 	m_frame++;
-	if (m_frame >= 60) {
+	if (m_frame >= FPS) {
 		m_oneDigit++;
-		m_frame -= 60;
+		m_frame = 0;
 	}
 	if (m_oneDigit >= 10) {
 		m_tenDigit++;

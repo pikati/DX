@@ -12,6 +12,8 @@
 /*頂点フォーマット*/
 #define FVF_VERTEX (D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1)
 
+#define FPS 60.0f
+
 
 /*シーンの状態管理変数*/
 enum SCENE_STATE {

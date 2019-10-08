@@ -9,7 +9,7 @@
 BaseScene			*SceneManager::m_scene[2];
 SCENE_STATE			SceneManager::m_sceneState;
 PDIRECT3DDEVICE9	SceneManager::m_d3dDevice;
-const float			SceneManager::MIN_FREAM_TIME = 1.0f / 60;
+const float			SceneManager::MIN_FREAM_TIME = 1.0f / FPS;
 float				SceneManager::frameTime = 0;
 float				SceneManager::fps = 0;
 bool				SceneManager::frame = false;

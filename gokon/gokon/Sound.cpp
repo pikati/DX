@@ -26,10 +26,10 @@ void Sound::Initialize() {
 }
 
 void Sound::Finalize() {
-	for (int i = SE_NUM; i >= 0; i--) {
+	for (int i = SE_NUM - 1; i >= 0; i--) {
 		SAFE_RELEASE(m_pSecondarySE[i]);
 	}
-	for (int i = BGM_NUM; i >= 0; i--) {
+	for (int i = BGM_NUM - 1; i >= 0; i--) {
 		SAFE_RELEASE(m_pSecondaryBGM[i]);
 	}
 	SAFE_RELEASE(m_pPrimary);
